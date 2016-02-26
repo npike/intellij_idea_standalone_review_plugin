@@ -81,7 +81,10 @@ public class ReviewManager {
         newComment.comment = comment;
 
         reviewFile.comments.add(newComment);
+
+        flush();
     }
+
 
     public void flush() {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(reviewFileForProject, false)))) {

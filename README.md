@@ -16,3 +16,15 @@ Future goals:
   * Support for markdown (would enable snazy things like including code snippets in a comment)
 * Support for customizable template for published review
 * Editor view showing all annotations in the current Review
+
+
+
+Helpful links
+http://bjorn.tipling.com/how-to-make-an-intellij-idea-plugin-in-30-minutes
+http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/creating_an_action.html
+https://github.com/syllant/idea-plugin-revu/blob/a07f78dd3b6e74370c8ad73cebbde80df8f9fced/src/main/java/org/sylfra/idea/plugins/revu/ui/forms/issue/IssueMainForm.java
+https://github.com/consulo-trash/consulo-bitbucket/blob/17ac8ee0694afb7026e9fd8e5ef5fdeaa979cad8/src/org/bitbucket/connectors/jetbrains/ui/HtmlMessageDialog.java
+https://github.com/consulo-trash/consulo-bitbucket/blob/17ac8ee0694afb7026e9fd8e5ef5fdeaa979cad8/src/org/bitbucket/connectors/jetbrains/ui/HtmlPanel.form
+https://raw.githubusercontent.com/consulo-trash/consulo-bitbucket/17ac8ee0694afb7026e9fd8e5ef5fdeaa979cad8/src/org/bitbucket/connectors/jetbrains/ui/HtmlPanel.java
+https://www.jetbrains.com/idea/help/exporting-and-importing-settings.html
+http://wicketforge.googlecode.com/svn/trunk/src/wicketforge/action/ui/ExtractHtmlTextDialog.java

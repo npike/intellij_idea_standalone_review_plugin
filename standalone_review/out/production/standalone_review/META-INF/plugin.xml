@@ -1,17 +1,15 @@
 <idea-plugin version="2">
-  <id>com.your.company.unique.plugin.id</id>
-  <name>Plugin display name here</name>
+  <id>net.npike.intellij.standalonereview</id>
+  <name>Standalone Review</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="npike@npike.net" url="http://www.npike.net">NPike Soft</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+     The goal of this plugin is to enable a code reviewer to add code annotations (via the Gutter) to the current open project in Intellij IDEA. Useful for the scenario where you are reviewing someone else's feature branch/hotfix and don't have the infrastructure setup for a centralized code review system (or just don't like Github's code review tooling).
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      - Nothing to note
     ]]>
   </change-notes>
 

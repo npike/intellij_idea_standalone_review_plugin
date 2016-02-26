@@ -40,7 +40,7 @@ public class AddCommentToLine extends AnAction {
         }
 
         // Note: will probably need this to show icon in gutter at some point indicating theres a review comment
-//        editor.getGutter().
+        // editor.getGutter().
 
         // TODO
         // - Capture line numbers of selection
@@ -50,9 +50,8 @@ public class AddCommentToLine extends AnAction {
         int lineStart = document.getLineNumber(editor.getSelectionModel().getSelectionStart());
         int lineEnd = document.getLineNumber(editor.getSelectionModel().getSelectionEnd());
 
-        String txt= Messages.showInputDialog(project, "Comment", "Input comment", Messages.getQuestionIcon());
 
-        ReviewManager.getInstance().addComment(virtualFile.getPath(), new int[]{lineStart, lineEnd}, txt);
-        ReviewManager.getInstance().flush();
+        IssueDialog id = new IssueDialog(virtualFile.getPath(), new int[]{lineStart, lineEnd});
+        id.show();
     }
 }
