@@ -28,11 +28,11 @@
 
   <actions>
     <!-- Add your actions here -->
-    <action id="standalonereview.AddCommentToLine" class="AddCommentToLine" text="Add comment to line"
+    <action id="standalonereview.AddCommentToLine" class="net.npike.intellij.standalonereview.actions.AddCommentToLineAction" text="Add comment to line"
             description="Add comment to line">
       <add-to-group group-id="EditorGutterPopupMenu" anchor="first"/>
     </action>
-    <action id="StandaloneReview.Publish" class="PublishReviewAction" text="Publish Standalone Review"
+    <action id="StandaloneReview.Publish" class="net.npike.intellij.standalonereview.actions.PublishReviewAction" text="Publish Standalone Review"
             description="Publishes the current Standalone Review">
       <add-to-group group-id="ToolsMenu" anchor="first"/>
     </action>
