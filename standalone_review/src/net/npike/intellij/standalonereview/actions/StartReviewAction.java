@@ -13,6 +13,7 @@ import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
 
 import net.npike.intellij.standalonereview.ReviewManager;
+import net.npike.intellij.standalonereview.util.Toast;
 
 /**
  * Created by npike on 2/26/16.
@@ -28,14 +29,7 @@ public class StartReviewAction extends AnAction {
 
         ReviewManager.getInstance().startReview(project);
 
-        StatusBar statusBar = WindowManager.getInstance()
-                .getStatusBar(DataKeys.PROJECT.getData(event.getDataContext()));
-        JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder("Review started", MessageType.INFO, null)
-                .setFadeoutTime(7500)
-                .createBalloon()
-                .show(RelativePoint.getCenterOf(statusBar.getComponent()),
-                        Balloon.Position.atRight);
 
+        Toast.show(event, "Review started", Toast.TOAST_LONG);
     }
 }

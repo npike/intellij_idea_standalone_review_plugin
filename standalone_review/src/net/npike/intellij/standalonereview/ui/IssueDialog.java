@@ -31,6 +31,12 @@ public class IssueDialog extends DialogWrapper {
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
+        mCenterPanel.getPanel().requestFocus();
+        return mCenterPanel.getPanel();
+    }
+
+    @Override
+    public JComponent getPreferredFocusedComponent() {
         return mCenterPanel.getPanel();
     }
 

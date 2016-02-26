@@ -54,8 +54,19 @@ public class AddCommentToLineAction extends AnAction {
         int lineEnd = document.getLineNumber(editor.getSelectionModel().getSelectionEnd());
 
 
-        IssueDialog id = new IssueDialog(virtualFile.getPath(), new int[]{lineStart, lineEnd});
+        IssueDialog id = new IssueDialog(getRelativePath(virtualFile, project.getBaseDir()), new int[]{lineStart, lineEnd});
         id.show();
+    }
+
+
+    public static String getRelativePath(VirtualFile file, VirtualFile folder) {
+        String filePath = file.getPath();
+        String folderPath = folder.getPath();
+        if (filePath.startsWith(folderPath)) {
+            return filePath.substring(folderPath.length() + 1);
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -1,8 +1,10 @@
 package net.npike.intellij.standalonereview;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 
 import net.npike.intellij.standalonereview.models.Comment;
 import net.npike.intellij.standalonereview.models.Review;
@@ -21,9 +23,9 @@ import java.util.Date;
 public class ReviewManager {
     private static final Logger LOGGER = Logger.getInstance(ReviewManager.class.getName());
     private static ReviewManager INSTANCE;
-    private File reviewFileForProject;
-    private final Gson gson;
-    private Review inMemoryReview;
+    private File mReviewFileForProject;
+    private final Gson mGson;
+    private Review mInMemoryReview;
     private Project mProjectUnderReview;
 
     public static ReviewManager getInstance() {
@@ -34,46 +36,59 @@ public class ReviewManager {
     }
 
     public ReviewManager() {
-        gson = new Gson();
-
+        mGson =  new GsonBuilder().setPrettyPrinting().create();
     }
 
     public boolean isStarted(Project project) {
         if (project != mProjectUnderReview) {
             return false;
         }
-        return reviewFileForProject != null;
+        return mReviewFileForProject != null;
     }
 
     public void startReview(Project project) {
         LOGGER.info("startReview for project.");
         mProjectUnderReview = project;
-        reviewFileForProject = new File(project.getBaseDir().getPath(), "standalone_review.txt");
+        mReviewFileForProject = new File(project.getBaseDir().getPath(), "standalone_review.txt");
 
-        if (!reviewFileForProject.exists()) {
-            LOGGER.info("Review file " + reviewFileForProject.getAbsolutePath() + " doesn't exist.");
-            inMemoryReview = new Review(project);
+        if (!mReviewFileForProject.exists()) {
+            LOGGER.info("Review file " + mReviewFileForProject.getAbsolutePath() + " doesn't exist.");
+            mInMemoryReview = new Review(project);
         } else {
-            LOGGER.info("Review file " + reviewFileForProject.getAbsolutePath() + " already exists.");
-            try {
-                BufferedReader br = new BufferedReader(
-                        new FileReader(reviewFileForProject));
-                inMemoryReview = gson.fromJson(br, Review.class);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            LOGGER.info("Review file " + mReviewFileForProject.getAbsolutePath() + " already exists.");
+
+            int dialogResponse = Messages.showYesNoCancelDialog(project, "It seems a review has already been started for " +
+                    "this project.  If you would like to resume it click 'Yes'.  Pressing 'No' will " +
+                    "start a new review.", "Standalone Review", Messages.getWarningIcon());
+
+            if (Messages.YES == dialogResponse) {
+                try {
+                    BufferedReader br = new BufferedReader(
+                            new FileReader(mReviewFileForProject));
+                    mInMemoryReview = mGson.fromJson(br, Review.class);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else if (Messages.NO == dialogResponse) {
+                mInMemoryReview = new Review(project);
+            } else {
+                mProjectUnderReview = null;
+                mReviewFileForProject = null;
             }
+
+
         }
     }
 
     public void addComment(String filepath, int[] lines, String comment) {
-        if (reviewFileForProject == null) {
+        if (mReviewFileForProject == null) {
             LOGGER.warn("Review for project hasn't been started yet?");
             return;
         }
 
         net.npike.intellij.standalonereview.models.File reviewFile = null;
 
-        for (net.npike.intellij.standalonereview.models.File f : inMemoryReview.files) {
+        for (net.npike.intellij.standalonereview.models.File f : mInMemoryReview.files) {
             if (f.filename.equalsIgnoreCase(filepath)) {
                 reviewFile = f;
                 break;
@@ -84,7 +99,7 @@ public class ReviewManager {
             reviewFile = new net.npike.intellij.standalonereview.models.File();
             reviewFile.filename = filepath;
             reviewFile.comments = new ArrayList<>();
-            inMemoryReview.files.add(reviewFile);
+            mInMemoryReview.files.add(reviewFile);
         }
 
         Comment newComment = new Comment();
@@ -98,9 +113,9 @@ public class ReviewManager {
 
 
     public void flush() {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(reviewFileForProject, false)))) {
-            out.print(gson.toJson(inMemoryReview));
-            LOGGER.info("Flushed review to file "+reviewFileForProject.getAbsolutePath());
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(mReviewFileForProject, false)))) {
+            out.print(mGson.toJson(mInMemoryReview));
+            LOGGER.info("Flushed review to file " + mReviewFileForProject.getAbsolutePath());
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
             LOGGER.error("flush exception", e);
@@ -108,7 +123,7 @@ public class ReviewManager {
     }
 
     public void publish() {
-        publish(reviewFileForProject.getParentFile().getAbsolutePath()+"/"+"standalone_review_publish.txt");
+        publish(mReviewFileForProject.getParentFile().getAbsolutePath() + "/" + "standalone_review_publish.txt");
     }
 
     private void publish(String filePath) {
@@ -116,12 +131,12 @@ public class ReviewManager {
 
         StringBuilder output = new StringBuilder();
 
-        output.append("Review for "+inMemoryReview.project+"\n");
-        output.append("Started "+new Date(inMemoryReview.startedTimeInMillis)+"\n");
+        output.append("Review for " + mInMemoryReview.project + "\n");
+        output.append("Started " + new Date(mInMemoryReview.startedTimeInMillis) + "\n");
         output.append("\n\n");
 
-        for (net.npike.intellij.standalonereview.models.File file : inMemoryReview.files) {
-            output.append(file.filename+":"+"\n");
+        for (net.npike.intellij.standalonereview.models.File file : mInMemoryReview.files) {
+            output.append(file.filename + ":" + "\n");
             // Sort comments by lines first
             if (file.comments != null) {
                 Collections.sort(file.comments, new Comparator<Comment>() {
@@ -132,15 +147,15 @@ public class ReviewManager {
                 });
 
                 for (Comment comment : file.comments) {
-                    output.append("\t["+comment.lines[0]+":"+comment.lines[comment.lines.length-1]+"] ");
-                    output.append(comment.comment+"\n");
+                    output.append("\t[" + comment.lines[0] + ":" + comment.lines[comment.lines.length - 1] + "] ");
+                    output.append(comment.comment + "\n");
                 }
             }
         }
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filePath, false)))) {
             out.print(output.toString());
-            LOGGER.info("Published review to file "+filePath);
+            LOGGER.info("Published review to file " + filePath);
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
             LOGGER.error("Publish exception", e);

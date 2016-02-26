@@ -15,6 +15,9 @@ public class IssuePanel {
     }
 
     public JPanel getPanel() {
+        mTextAreaComment.requestFocusInWindow();
         return myPane;
     }
+
+
 }
