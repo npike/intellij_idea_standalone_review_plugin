@@ -1,7 +1,12 @@
+package net.npike.intellij.standalonereview;
+
 import com.google.gson.Gson;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import models.*;
+
+import net.npike.intellij.standalonereview.models.Comment;
+import net.npike.intellij.standalonereview.models.Review;
+
 
 import java.io.*;
 import java.io.File;
@@ -60,9 +65,9 @@ public class ReviewManager {
             return;
         }
 
-        models.File reviewFile = null;
+        net.npike.intellij.standalonereview.models.File reviewFile = null;
 
-        for (models.File f : inMemoryReview.files) {
+        for (net.npike.intellij.standalonereview.models.File f : inMemoryReview.files) {
             if (f.filename.equalsIgnoreCase(filepath)) {
                 reviewFile = f;
                 break;
@@ -70,7 +75,7 @@ public class ReviewManager {
         }
 
         if (reviewFile == null) {
-            reviewFile = new models.File();
+            reviewFile = new net.npike.intellij.standalonereview.models.File();
             reviewFile.filename = filepath;
             reviewFile.comments = new ArrayList<>();
             inMemoryReview.files.add(reviewFile);
@@ -109,7 +114,7 @@ public class ReviewManager {
         output.append("Started "+new Date(inMemoryReview.startedTimeInMillis)+"\n");
         output.append("\n\n");
 
-        for (models.File file : inMemoryReview.files) {
+        for (net.npike.intellij.standalonereview.models.File file : inMemoryReview.files) {
             output.append(file.filename+":"+"\n");
             // Sort comments by lines first
             if (file.comments != null) {

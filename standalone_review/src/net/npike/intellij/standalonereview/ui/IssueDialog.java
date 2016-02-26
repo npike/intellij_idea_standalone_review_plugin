@@ -1,7 +1,9 @@
-
+package net.npike.intellij.standalonereview.ui;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.DialogWrapper;
+
+import net.npike.intellij.standalonereview.ReviewManager;
 
 import org.jetbrains.annotations.Nullable;
 

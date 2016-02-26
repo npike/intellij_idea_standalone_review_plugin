@@ -1,4 +1,4 @@
-package models;
+package net.npike.intellij.standalonereview.models;
 
 import com.intellij.openapi.project.Project;
 

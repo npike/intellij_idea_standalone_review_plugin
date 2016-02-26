@@ -1,3 +1,5 @@
+package net.npike.intellij.standalonereview.actions;
+
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -6,13 +8,15 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+
+import net.npike.intellij.standalonereview.ReviewManager;
+import net.npike.intellij.standalonereview.ui.IssueDialog;
 
 /**
  * Created by npike on 2/25/16.
  */
-public class AddCommentToLine extends AnAction {
+public class AddCommentToLineAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent event) {

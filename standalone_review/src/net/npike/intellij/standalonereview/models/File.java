@@ -1,4 +1,4 @@
-package models;
+package net.npike.intellij.standalonereview.models;
 
 import java.util.List;
 

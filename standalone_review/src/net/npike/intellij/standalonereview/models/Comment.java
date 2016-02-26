@@ -1,4 +1,4 @@
-package models;
+package net.npike.intellij.standalonereview.models;
 
 /**
  * Created by npike on 2/25/16.

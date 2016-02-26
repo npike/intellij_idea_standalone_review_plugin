@@ -1,3 +1,5 @@
+package net.npike.intellij.standalonereview.ui;
+
 import javax.swing.*;
 
 public class IssuePanel {
