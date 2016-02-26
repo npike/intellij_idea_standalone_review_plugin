@@ -27,14 +27,23 @@
   </extensions>
 
   <actions>
+    <group id="StandaloneReview" text="Standalone Review" popup="true">
+      <add-to-group group-id="ToolsMenu" anchor="first"/>
+    </group>
     <!-- Add your actions here -->
     <action id="standalonereview.AddCommentToLine" class="net.npike.intellij.standalonereview.actions.AddCommentToLineAction" text="Add comment to line"
             description="Add comment to line">
       <add-to-group group-id="EditorGutterPopupMenu" anchor="first"/>
+      <add-to-group group-id="StandaloneReview" anchor="first"/>
     </action>
     <action id="StandaloneReview.Publish" class="net.npike.intellij.standalonereview.actions.PublishReviewAction" text="Publish Standalone Review"
             description="Publishes the current Standalone Review">
-      <add-to-group group-id="ToolsMenu" anchor="first"/>
+      <add-to-group group-id="StandaloneReview" anchor="first"/>
+    </action>
+    <action id="standalonereview.StartReview"
+            class="net.npike.intellij.standalonereview.actions.StartReviewAction"
+            text="Start Review" description="Starts a standalone review for the current project.">
+      <add-to-group group-id="StandaloneReview" anchor="first"/>
     </action>
   </actions>
 

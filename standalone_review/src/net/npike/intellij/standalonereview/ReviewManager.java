@@ -24,6 +24,7 @@ public class ReviewManager {
     private File reviewFileForProject;
     private final Gson gson;
     private Review inMemoryReview;
+    private Project mProjectUnderReview;
 
     public static ReviewManager getInstance() {
         if (INSTANCE == null) {
@@ -37,13 +38,18 @@ public class ReviewManager {
 
     }
 
-    public boolean isStarted() {
+    public boolean isStarted(Project project) {
+        if (project != mProjectUnderReview) {
+            return false;
+        }
         return reviewFileForProject != null;
     }
 
     public void startReview(Project project) {
         LOGGER.info("startReview for project.");
+        mProjectUnderReview = project;
         reviewFileForProject = new File(project.getBaseDir().getPath(), "standalone_review.txt");
+
         if (!reviewFileForProject.exists()) {
             LOGGER.info("Review file " + reviewFileForProject.getAbsolutePath() + " doesn't exist.");
             inMemoryReview = new Review(project);

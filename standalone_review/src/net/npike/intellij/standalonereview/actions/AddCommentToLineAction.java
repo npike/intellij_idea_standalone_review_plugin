@@ -20,7 +20,6 @@ public class AddCommentToLineAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent event) {
-        // TODO: insert action logic here
         Project project = event.getData(PlatformDataKeys.PROJECT);
         if (project == null) {
             return;
@@ -39,7 +38,7 @@ public class AddCommentToLineAction extends AnAction {
             return;
         }
 
-        if (!ReviewManager.getInstance().isStarted()) {
+        if (!ReviewManager.getInstance().isStarted(project)) {
             ReviewManager.getInstance().startReview(project);
         }
 
@@ -57,5 +56,14 @@ public class AddCommentToLineAction extends AnAction {
 
         IssueDialog id = new IssueDialog(virtualFile.getPath(), new int[]{lineStart, lineEnd});
         id.show();
+    }
+
+    @Override
+    public void update(AnActionEvent e) {
+        Project project = e.getData(PlatformDataKeys.PROJECT);
+        if (project == null) {
+            return;
+        }
+        e.getPresentation().setEnabledAndVisible(ReviewManager.getInstance().isStarted(project));
     }
 }
