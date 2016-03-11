@@ -32,4 +32,15 @@ public class StartReviewAction extends AnAction {
 
         Toast.show(event, "Review started", Toast.TOAST_LONG);
     }
+
+    @Override
+    public void update(AnActionEvent e) {
+        Project project = e.getData(PlatformDataKeys.PROJECT);
+        if (project == null) {
+            return;
+        }
+
+        // Hide this menu item if the review has been started.
+        e.getPresentation().setEnabledAndVisible(!ReviewManager.getInstance().isStarted(project));
+    }
 }
