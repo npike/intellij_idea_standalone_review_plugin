@@ -20,16 +20,22 @@ public class IssueDialog extends DialogWrapper {
 
     public IssueDialog() {
         super(false);
+
+        setup();
     }
 
     public IssueDialog(String filepath, int[] lines) {
         super(false);
+        mFilePath = filepath;
+        mLines = lines;
+
+        setup();
+    }
+
+    private void setup() {
         setTitle("New comment");
         this.mCenterPanel = new IssuePanel();
         this.setResizable(true);
-
-        mFilePath = filepath;
-        mLines = lines;
 
         init();
     }

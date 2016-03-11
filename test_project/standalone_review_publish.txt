@@ -1,11 +1,9 @@
-Review for null
-Started Wed Dec 31 16:00:00 PST 1969
+Review for test project
+Started Fri Mar 11 12:01:20 PST 2016
 
 
-/Users/npike/Dropbox/projects/work_idea_plugins/test_project/src/TestObject.java:
-	[4:6why all of the foo?
-	[8:8test
-/Users/npike/Dropbox/projects/work_idea_plugins/test_project/src/TestObject2.java:
-	[3:3I like this.  This has potential
-	[4:5test test
-	[6:6I think you meant "getTestObject()" here...
+* asd
+
+
+src/TestObject2.java:
+	[9:9] Typo in method name.

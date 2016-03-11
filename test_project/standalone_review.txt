@@ -5,14 +5,19 @@
       "comments": [
         {
           "lines": [
-            6,
-            6
+            9,
+            9
           ],
-          "comment": "runny nose is not fun"
+          "comment": "Typo in method name."
         }
       ]
     }
   ],
+  "comments": [
+    {
+      "comment": "asd"
+    }
+  ],
   "project": "test project",
-  "startedTimeInMillis": 1456510290083
+  "startedTimeInMillis": 1457726480791
 }
