@@ -150,11 +150,12 @@ public class ReviewManager {
         output.append("Started " + new Date(mInMemoryReview.startedTimeInMillis) + "\n");
         output.append("\n\n");
 
+        output.append("General comments:\n");
         for (Comment comment : mInMemoryReview.comments) {
             output.append("* " + comment.comment + "\n");
         }
 
-        output.append("\n\n");
+        output.append("\n");
 
         for (net.npike.intellij.standalonereview.models.File file : mInMemoryReview.files) {
             output.append(file.filename + ":" + "\n");
@@ -163,15 +164,27 @@ public class ReviewManager {
                 Collections.sort(file.comments, new Comparator<Comment>() {
                     @Override
                     public int compare(Comment o1, Comment o2) {
+                        if (o1.lines == null || o1.lines.length == 0) {
+                            return -1;
+                        }
+
+                        if (o2.lines == null || o2.lines.length == 0) {
+                            return -1;
+                        }
                         return Integer.compare(o1.lines[0], o2.lines[0]);
                     }
                 });
 
                 for (Comment comment : file.comments) {
-                    output.append("\t[" + comment.lines[0] + ":" + comment.lines[comment.lines.length - 1] + "] ");
+                    output.append("\t* ");
+                    if (comment.lines != null && comment.lines.length > 0) {
+                        output.append("[" + comment.lines[0] + ":" + comment.lines[comment.lines.length - 1] + "] ");
+                    }
                     output.append(comment.comment + "\n");
                 }
             }
+
+            output.append("\n");
         }
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filePath, false)))) {

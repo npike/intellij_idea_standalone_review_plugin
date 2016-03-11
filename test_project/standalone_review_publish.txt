@@ -2,8 +2,17 @@ Review for test project
 Started Fri Mar 11 12:01:20 PST 2016
 
 
+General comments:
 * asd
 
-
 src/TestObject2.java:
-	[9:9] Typo in method name.
+	* Another comment for TestObject2
+	* This should be a comment for TestObject2.java that doesn't have line info.
+	* [9:9] Typo in method name.
+
+src/TestObject.java:
+	* Comment for TestObject.java without lines.
+
+appframe__map__ic_h2v_welcome_icon.png:
+	* Comment on welcome_icon.png
+
