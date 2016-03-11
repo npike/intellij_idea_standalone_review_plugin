@@ -36,7 +36,7 @@ public class ReviewManager {
     }
 
     public ReviewManager() {
-        mGson =  new GsonBuilder().setPrettyPrinting().create();
+        mGson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     public boolean isStarted(Project project) {
@@ -78,6 +78,21 @@ public class ReviewManager {
 
 
         }
+    }
+
+    /**
+     * Adds a comment to the top level review, not associated with a file or line.
+     */
+    public void addComment(String comment) {
+        if (mReviewFileForProject == null) {
+            LOGGER.warn("Review for project hasn't been started yet?");
+            return;
+        }
+
+        Comment commentObject = new Comment();
+        commentObject.comment = comment;
+
+        mInMemoryReview.comments.add(commentObject);
     }
 
     public void addComment(String filepath, int[] lines, String comment) {
@@ -133,6 +148,12 @@ public class ReviewManager {
 
         output.append("Review for " + mInMemoryReview.project + "\n");
         output.append("Started " + new Date(mInMemoryReview.startedTimeInMillis) + "\n");
+        output.append("\n\n");
+
+        for (Comment comment : mInMemoryReview.comments) {
+            output.append("* " + comment.comment + "\n");
+        }
+
         output.append("\n\n");
 
         for (net.npike.intellij.standalonereview.models.File file : mInMemoryReview.files) {

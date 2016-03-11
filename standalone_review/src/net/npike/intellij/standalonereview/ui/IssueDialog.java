@@ -1,9 +1,11 @@
 package net.npike.intellij.standalonereview.ui;
 
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 
 import net.npike.intellij.standalonereview.ReviewManager;
+import net.npike.intellij.standalonereview.models.Review;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -12,9 +14,13 @@ import javax.swing.*;
 public class IssueDialog extends DialogWrapper {
     private static final Logger LOGGER = Logger.getInstance(ReviewManager.class.getName());
 
-    private final IssuePanel mCenterPanel;
-    private final String mFilePath;
-    private final int[] mLines;
+    private IssuePanel mCenterPanel;
+    private String mFilePath;
+    private int[] mLines;
+
+    public IssueDialog() {
+        super(false);
+    }
 
     public IssueDialog(String filepath, int[] lines) {
         super(false);
@@ -48,7 +54,11 @@ public class IssueDialog extends DialogWrapper {
     protected void doOKAction() {
         LOGGER.info("doOKAction");
 
-        ReviewManager.getInstance().addComment(mFilePath, mLines, mCenterPanel.getComment());
+        if (mFilePath != null) {
+            ReviewManager.getInstance().addComment(mFilePath, mLines, mCenterPanel.getComment());
+        } else {
+            ReviewManager.getInstance().addComment(mCenterPanel.getComment());
+        }
 
         super.doOKAction();
     }

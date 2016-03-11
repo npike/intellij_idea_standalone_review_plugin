@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Review {
     public List<File> files;
+    public List<Comment> comments;
     public String project;
     public long startedTimeInMillis;
 
@@ -18,5 +19,6 @@ public class Review {
         this.project = project.getName();
         startedTimeInMillis = System.currentTimeMillis();
         files = new ArrayList<>();
+        comments = new ArrayList<>();
     }
 }

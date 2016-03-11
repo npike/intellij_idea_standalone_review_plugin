@@ -45,6 +45,12 @@
             text="Start Review" description="Starts a standalone review for the current project.">
       <add-to-group group-id="StandaloneReview" anchor="first"/>
     </action>
+    <action id="standaloneReview.AddCommentToReview"
+            class="net.npike.intellij.standalonereview.actions.AddCommentToReview"
+            text="Add comment to review"
+            description="Adds a comment to the entire review, not attached to a specific file or line.">
+      <add-to-group group-id="StandaloneReview" anchor="first"/>
+    </action>
   </actions>
 
 </idea-plugin>
