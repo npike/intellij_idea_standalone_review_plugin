@@ -150,12 +150,14 @@ public class ReviewManager {
         output.append("Started " + new Date(mInMemoryReview.startedTimeInMillis) + "\n");
         output.append("\n\n");
 
-        output.append("General comments:\n");
-        for (Comment comment : mInMemoryReview.comments) {
-            output.append("* " + comment.comment + "\n");
-        }
 
-        output.append("\n");
+        if (mInMemoryReview.comments != null && mInMemoryReview.comments.size() > 0) {
+            output.append("General comments:\n");
+            for (Comment comment : mInMemoryReview.comments) {
+                output.append("* " + comment.comment + "\n");
+            }
+            output.append("\n");
+        }
 
         for (net.npike.intellij.standalonereview.models.File file : mInMemoryReview.files) {
             output.append(file.filename + ":" + "\n");
