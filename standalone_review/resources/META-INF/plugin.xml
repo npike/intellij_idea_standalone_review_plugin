@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>net.npike.intellij.standalonereview</id>
   <name>Standalone Review</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <vendor email="npike@npike.net" url="http://www.npike.net">NPike Soft</vendor>
 
   <description><![CDATA[
@@ -27,35 +27,35 @@
   </extensions>
 
   <actions>
-    <group id="StandaloneReview" text="Standalone Review" popup="true">
+    <group id="ToolsMenu.StandaloneReview" text="Standalone Review" popup="true">
       <add-to-group group-id="ToolsMenu" anchor="first"/>
     </group>
     <!-- Add your actions here -->
     <action id="standalonereview.AddCommentToLine" class="net.npike.intellij.standalonereview.actions.AddCommentToLineAction" text="Add comment to line"
             description="Add comment to line">
-      <add-to-group group-id="EditorGutterPopupMenu" anchor="first"/>
-      <add-to-group group-id="StandaloneReview" anchor="first"/>
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+      <add-to-group group-id="ToolsMenu.StandaloneReview" anchor="first"/>
     </action>
     <action id="StandaloneReview.Publish" class="net.npike.intellij.standalonereview.actions.PublishReviewAction" text="Publish Standalone Review"
             description="Publishes the current Standalone Review">
-      <add-to-group group-id="StandaloneReview" anchor="first"/>
+      <add-to-group group-id="ToolsMenu.StandaloneReview" anchor="first"/>
     </action>
     <action id="standalonereview.StartReview"
             class="net.npike.intellij.standalonereview.actions.StartReviewAction"
             text="Start Review" description="Starts a standalone review for the current project.">
-      <add-to-group group-id="StandaloneReview" anchor="first"/>
+      <add-to-group group-id="ToolsMenu.StandaloneReview" anchor="last"/>
     </action>
     <action id="standaloneReview.AddCommentToReview"
             class="net.npike.intellij.standalonereview.actions.AddCommentToReview"
             text="Add comment to review"
             description="Adds a comment to the entire review, not attached to a specific file or line.">
-      <add-to-group group-id="StandaloneReview" anchor="first"/>
+      <add-to-group group-id="ToolsMenu.StandaloneReview" anchor="last"/>
     </action>
     <action id="AddCommentToFile"
             class="net.npike.intellij.standalonereview.actions.AddCommentToFile"
             text="Add comment to file"
             description="Adds a comment to the current file, without associated line information.">
-      <add-to-group group-id="StandaloneReview" anchor="first"/>
+      <add-to-group group-id="ToolsMenu.StandaloneReview" anchor="last"/>
     </action>
   </actions>
 

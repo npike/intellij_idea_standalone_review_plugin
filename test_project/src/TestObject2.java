@@ -6,4 +6,8 @@ public class TestObject2 {
     public TestObject getTetObject() {
         return new TestObject();
     }
+
+    public void helloWorld() {
+        // TODO
+    }
 }

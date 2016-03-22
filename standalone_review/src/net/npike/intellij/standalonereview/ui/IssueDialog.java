@@ -1,11 +1,9 @@
 package net.npike.intellij.standalonereview.ui;
 
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 
 import net.npike.intellij.standalonereview.ReviewManager;
-import net.npike.intellij.standalonereview.models.Review;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +12,7 @@ import javax.swing.*;
 public class IssueDialog extends DialogWrapper {
     private static final Logger LOGGER = Logger.getInstance(ReviewManager.class.getName());
 
-    private IssuePanel mCenterPanel;
+    private IssuePanel mIssuePanel;
     private String mFilePath;
     private int[] mLines;
 
@@ -32,9 +30,13 @@ public class IssueDialog extends DialogWrapper {
         setup();
     }
 
+    public void setCodePreview(String code) {
+        mIssuePanel.putCodePreview(code);
+    }
+
     private void setup() {
         setTitle("New comment");
-        this.mCenterPanel = new IssuePanel();
+        this.mIssuePanel = new IssuePanel();
         this.setResizable(true);
 
         init();
@@ -43,13 +45,13 @@ public class IssueDialog extends DialogWrapper {
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
-        mCenterPanel.getPanel().requestFocus();
-        return mCenterPanel.getPanel();
+        mIssuePanel.getPanel().requestFocus();
+        return mIssuePanel.getPanel();
     }
 
     @Override
     public JComponent getPreferredFocusedComponent() {
-        return mCenterPanel.getPanel();
+        return mIssuePanel.getPanel();
     }
 
     protected Action[] createActions() {
@@ -61,9 +63,9 @@ public class IssueDialog extends DialogWrapper {
         LOGGER.info("doOKAction");
 
         if (mFilePath != null) {
-            ReviewManager.getInstance().addComment(mFilePath, mLines, mCenterPanel.getComment());
+            ReviewManager.getInstance().addComment(mFilePath, mLines, mIssuePanel.getComment());
         } else {
-            ReviewManager.getInstance().addComment(mCenterPanel.getComment());
+            ReviewManager.getInstance().addComment(mIssuePanel.getComment());
         }
 
         super.doOKAction();

@@ -3,11 +3,16 @@ package net.npike.intellij.standalonereview.actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.editor.ex.util.EditorUtil;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import net.npike.intellij.standalonereview.ReviewManager;
@@ -49,13 +54,37 @@ public class AddCommentToLineAction extends AnAction {
         // - Capture line numbers of selection
         // - Capture file name
         // - Capture git revision
+        CaretModel caretModel = editor.getCaretModel();
 
-        int lineStart = document.getLineNumber(editor.getSelectionModel().getSelectionStart());
-        int lineEnd = document.getLineNumber(editor.getSelectionModel().getSelectionEnd());
+        String selectedCode;
+        int lineStart;
+        int lineEnd;
+        if (editor.getSelectionModel().hasSelection()) {
+            lineStart = document.getLineNumber(editor.getSelectionModel().getSelectionStart()) + 1;
+            lineEnd = document.getLineNumber(editor.getSelectionModel().getSelectionEnd())+ 1;
 
+            selectedCode = document.getCharsSequence().subSequence(editor.getSelectionModel().getSelectionStart(), editor.getSelectionModel().getSelectionEnd()).toString();
+        } else {
+            Pair<LogicalPosition, LogicalPosition> lines = EditorUtil.calcSurroundingRange(editor, caretModel.getVisualPosition(), caretModel.getVisualPosition());
+            int offset = editor.getCaretModel().getOffset();
 
-        IssueDialog id = new IssueDialog(getRelativePath(virtualFile, project.getBaseDir()), new int[]{lineStart, lineEnd});
+            LogicalPosition lineStartLP = lines.first;
+            LogicalPosition nextLineStart = lines.second;
+            int start = editor.logicalPositionToOffset(lineStartLP);
+            int end = editor.logicalPositionToOffset(nextLineStart);
+
+            selectedCode = document.getCharsSequence().subSequence(start, end).toString();
+
+            lineStart  = lineEnd = document.getLineNumber(caretModel.getVisualLineStart()) + 1;
+        }
+
+        IssueDialog id = new IssueDialog(getRelativePath(virtualFile, project.getBaseDir()),
+                new int[]{lineStart,
+                        lineEnd});
+        id.setCodePreview(selectedCode);
         id.show();
+
+
     }
 
 

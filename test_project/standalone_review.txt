@@ -5,41 +5,29 @@
       "comments": [
         {
           "lines": [
-            9,
-            9
+            11,
+            11
           ],
-          "comment": "Typo in method name."
+          "comment": "line 11 no selection"
         },
         {
-          "comment": "This should be a comment for TestObject2.java that doesn\u0027t have line info."
+          "lines": [
+            11,
+            11
+          ],
+          "comment": "line 11 select"
         },
         {
-          "comment": "Another comment for TestObject2"
-        }
-      ]
-    },
-    {
-      "filename": "src/TestObject.java",
-      "comments": [
-        {
-          "comment": "Comment for TestObject.java without lines."
-        }
-      ]
-    },
-    {
-      "filename": "appframe__map__ic_h2v_welcome_icon.png",
-      "comments": [
-        {
-          "comment": "Comment on welcome_icon.png"
+          "lines": [
+            10,
+            12
+          ],
+          "comment": "lines 10 to 12"
         }
       ]
     }
   ],
-  "comments": [
-    {
-      "comment": "asd"
-    }
-  ],
+  "comments": [],
   "project": "test project",
-  "startedTimeInMillis": 1457726480791
+  "startedTimeInMillis": 1458670769453
 }
